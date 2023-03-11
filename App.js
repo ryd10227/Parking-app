@@ -1,13 +1,25 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
 import auth from "@react-native-firebase/auth";
+import { NavigationContainer } from "@react-navigation/native";
+import OutNav from "./navigators/OutNav";
+import InNav from "./navigators/InNav";
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  }, []);
   return (
-    <View style={styles.container}>
-      <Text>파이어 베이스 연동까지함 + Auth npm 다운</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      {isLoggedIn ? <InNav /> : <OutNav />}
+    </NavigationContainer>
   );
 }
