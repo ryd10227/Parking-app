@@ -1,12 +1,21 @@
 import React from "react";
-import styled from "styled-components";
+import auth from "@react-native-firebase/auth";
+import styled from "styled-components/native";
 
 const Container = styled.View``;
 const Text = styled.Text``;
+const Btn = styled.TouchableOpacity``;
+const BtnText = styled.Text``;
 
+const logOut = () => {
+  auth().signOut();
+};
 const Home = () => (
   <Container>
     <Text>HOME</Text>
+    <Btn onPress={logOut}>
+      <BtnText>Log Out</BtnText>
+    </Btn>
   </Container>
 );
 
